@@ -1,24 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   easyfind.hpp                                       :+:    :+:            */
+/*   span.hpp                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: christian.rasche <christian.rasche@stud      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/09 14:58:12 by christian.r   #+#    #+#                 */
-/*   Updated: 2025/05/28 14:28:48 by crasche       ########   odam.nl         */
+/*   Updated: 2025/06/13 14:28:39 by crasche       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EASYFIND_HPP
-# define EASYFIND_HPP
+#ifndef SPAN_HPP
+# define SPAN_HPP
 
 # include <iostream>
-# include <stdlib.h>
 # include <algorithm>
-# include <stdexcept>
+# include <exception>
 # include <iterator>
 # include <vector>
+# include <limits>
+
+
+class Span
+{
+private:
+	unsigned int			_n;
+	std::vector<int>		_nbrs;
+public:
+	// Constructors and destructor
+	Span(unsigned int size);
+	~Span();
+	// Copy constructor and assignment operator
+	Span(const Span &other);
+	Span &operator=(const Span &other);
+
+	void	addNumber(int number);
+	void	addRange(std::vector<int>::iterator begin, std::vector<int>::iterator end);
+	int		shortestSpan() const;
+	int		longestSpan() const;
+
+	// Exception Classes
+	class SpanFullException : public std::exception {
+	public:
+		const char *what() const throw();
+	};
+	class NoSpanFoundException : public std::exception {
+	public:
+		const char *what() const throw();
+	};
+};
 
 # define RESET          "\033[0m"
 # define BLACK          "\033[30m"
@@ -46,14 +76,6 @@
 # define BOLD           "\033[1m"
 # define UNDERLINE      "\033[4m"
 
-template <typename T>
-int easyfind(T &container, int value)
-{
-	auto it = std::find(container.begin(), container.end(), value);
-	if (it == container.end())
-		throw std::runtime_error("Value not found in the container");
-	return *it;
-}
 
 
-#endif // EASYFIND_HPP
+#endif // SPAN_HPP
