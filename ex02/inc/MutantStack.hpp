@@ -1,53 +1,74 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   span.hpp                                          :+:    :+:            */
+/*   MutantStack.hpp                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: christian.rasche <christian.rasche@stud      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/09 14:58:12 by christian.r   #+#    #+#                 */
-/*   Updated: 2025/06/13 14:28:39 by crasche       ########   odam.nl         */
+/*   Updated: 2025/06/16 17:24:42 by crasche       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SPAN_HPP
-# define SPAN_HPP
+#ifndef MUTANT_STACK_HPP
+# define MUTANT_STACK_HPP
 
 # include <iostream>
 # include <algorithm>
-# include <exception>
 # include <iterator>
-# include <vector>
-# include <limits>
+# include <deque>
+# include <stack>
 
-
-class Span
+template <typename T, class BaseContainer = std::deque<T>>
+class MutantStack : public std::stack<T, BaseContainer>
 {
-private:
-	unsigned int			_n;
-	std::vector<int>		_nbrs;
-public:
-	// Constructors and destructor
-	Span(unsigned int size);
-	~Span();
-	// Copy constructor and assignment operator
-	Span(const Span &other);
-	Span &operator=(const Span &other);
-
-	void	addNumber(int number);
-	void	addRange(std::vector<int>::iterator begin, std::vector<int>::iterator end);
-	int		shortestSpan();
-	int		longestSpan();
-
-	// Exception Classes
-	class SpanFullException : public std::exception {
+	private:
 	public:
-		const char *what() const throw();
-	};
-	class NoSpanFoundException : public std::exception {
-	public:
-		const char *what() const throw();
-	};
+		// Typedefs for iterator types
+		typedef typename BaseContainer::iterator iterator;
+		typedef typename BaseContainer::const_iterator const_iterator;
+		typedef typename BaseContainer::reverse_iterator reverse_iterator;
+		typedef typename BaseContainer::const_reverse_iterator const_reverse_iterator;
+
+		// Default constructor
+		MutantStack() : std::stack<T, BaseContainer>() {}
+
+		// Copy constructor
+		MutantStack(const MutantStack &other) : std::stack<T, BaseContainer>(other) {}
+
+		// Assignment operator
+		MutantStack &operator=(const MutantStack &other) {
+			if (this != &other)
+				std::stack<T, BaseContainer>::operator=(other);
+			return *this;
+		}
+
+		// Iterator functions
+		iterator begin() {
+			return this->c.begin();
+		}
+		const_iterator begin() const {
+			return this->c.begin();
+		}
+		reverse_iterator rbegin() {
+			return this->c.rbegin();
+		}
+		const_reverse_iterator rbegin() const {
+			return this->c.rbegin();
+		}
+
+		iterator end() {
+			return this->c.end();
+		}
+		const_iterator end() const {
+			return this->c.end();
+		}
+		reverse_iterator rend() {
+			return this->c.rend();
+		}
+		const_reverse_iterator rend() const {
+			return this->c.rend();
+		}
 };
 
 # define RESET          "\033[0m"
@@ -76,6 +97,4 @@ public:
 # define BOLD           "\033[1m"
 # define UNDERLINE      "\033[4m"
 
-
-
-#endif // SPAN_HPP
+#endif // MUTANT_STACK_HPP

@@ -26,12 +26,12 @@ void Span::addNumber(int nbr) {
 		throw SpanFullException();
 	_n--;
 	_nbrs.push_back(nbr);
-	std::sort(_nbrs.begin(), _nbrs.end());
 }
 
-int Span::shortestSpan() const {
+int Span::shortestSpan() {
 	if (_nbrs.size() < 2)
 		throw NoSpanFoundException();
+	std::sort(_nbrs.begin(), _nbrs.end());
 	int shortestSpan = std::numeric_limits<int>::max();
 	for (unsigned int i = 1; i < _nbrs.size(); i++) {
 		shortestSpan = std::min(shortestSpan, _nbrs[i] - _nbrs[i - 1]);
@@ -39,9 +39,10 @@ int Span::shortestSpan() const {
 	return (shortestSpan);
 }
 
-int Span::longestSpan() const {
+int Span::longestSpan() {
 	if (_nbrs.size() < 2)
 		throw NoSpanFoundException();
+	std::sort(_nbrs.begin(), _nbrs.end());
 	int longestSpan = _nbrs.back() - _nbrs.front();
 	return (longestSpan);
 }

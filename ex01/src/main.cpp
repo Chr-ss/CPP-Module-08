@@ -6,11 +6,20 @@
 /*   By: crasche <crasche@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/07 16:36:52 by crasche       #+#    #+#                 */
-/*   Updated: 2025/06/13 16:45:02 by crasche       ########   odam.nl         */
+/*   Updated: 2025/06/16 16:34:17 by crasche       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/span.hpp"
+
+#include <fstream>
+
+// int get_random_int() {
+// 	std::ifstream urandom("/dev/urandom", std::ios::in | std::ios::binary);
+// 	int num;
+// 	urandom.read(reinterpret_cast<char*>(&num), sizeof(num));
+// 	return num;
+// }
 
 int main(void)
 {
@@ -42,10 +51,10 @@ int main(void)
 
 		for (int i = 1; i < 20000; i++)
 		{
-			if (i % 100 == 0)
-				span2.addNumber(55555);
-			else
+			if (i == 19999)
 				span2.addNumber(i);
+			else
+				span2.addNumber(55555);
 		}
 
 		std::cout << span2.shortestSpan() << std::endl;
