@@ -27,6 +27,8 @@ private:
 	unsigned int			_n;
 	std::vector<int>		_nbrs;
 public:
+	// Default constructor
+	Span() = delete;
 	// Constructors and destructor
 	Span(unsigned int size);
 	~Span();
